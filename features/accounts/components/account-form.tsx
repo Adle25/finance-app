@@ -58,7 +58,7 @@ export const AccountForm = ({ id, defaultValues, onSubmit, onDelete, disabled }:
                 <Button className="w-full" disabled={disabled}>
                     {id ? "Save changes" : "Create account"}
                 </Button>
-                {!!id ?? <Button type="button" className="w-full" disabled={disabled} onClick={handleDelete} variant="outline">
+                {!!id && <Button type="button" className="w-full" disabled={disabled} onClick={handleDelete} variant="outline">
                     <Trash className="size-4 mr-2" />
                     Delete account
                 </Button>
