@@ -1,12 +1,12 @@
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { AccountForm } from "./account-form";
+import { AccountForm } from "./transaction-form";
 import { insertAccountSchema } from "@/db/schema";
 import { z } from "zod";
 import { useOpenAccount } from "../hooks/use-open-account";
-import { useEditAccount } from "../api/use-edit-account";
-import { useGetAccount } from "../api/use-get-account";
+import { useEditAccount } from "../api/use-edit-transaction";
+import { useGetAccount } from "../api/use-get-transaction/";
 import { Loader2 } from "lucide-react";
-import { useDeleteAccount } from "../api/use-delete-account";
+import { useDeleteAccount } from "../api/use-delete-transaction";
 import { useConfirm } from "@/hooks/use-confirm";
 
 
