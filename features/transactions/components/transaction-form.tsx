@@ -9,6 +9,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { insertTransactionSchema } from "@/db/schema";
 import { Select } from "@/components/select";
 import { Textarea } from "@/components/ui/textarea";
+import { AmountInput } from "@/components/amount-input";
+import { converAmountToMilliUnits } from "@/lib/utils";
 
 
 const formSchema = z.object({
@@ -44,7 +46,12 @@ export const TransactionForm = ({ id, defaultValues, onSubmit, onDelete, disable
     });
 
     const handleSubmit = (values: FormValues) => {
-        console.log({ values })
+        const amount = parseFloat(values.amount);
+        const amountInMilliUnits = converAmountToMilliUnits(amount);
+        onSubmit({
+            ...values,
+            amount: amountInMilliUnits
+        })
     };
 
     const handleDelete = () => {
@@ -124,6 +131,22 @@ export const TransactionForm = ({ id, defaultValues, onSubmit, onDelete, disable
                     )}
                 />
                 <FormField
+                    name="amount"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Amount</FormLabel>
+                            <FormControl>
+                                <AmountInput
+                                    {...field}
+                                    disabled={disabled}
+                                    placeholder="0.00"
+                                />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+                <FormField
                     name="notes"
                     control={form.control}
                     render={({ field }) => (
@@ -141,7 +164,7 @@ export const TransactionForm = ({ id, defaultValues, onSubmit, onDelete, disable
                     )}
                 />
                 <Button className="w-full" disabled={disabled}>
-                    {id ? "Save changes" : "Create account"}
+                    {id ? "Save changes" : "Create transaction"}
                 </Button>
                 {!!id && <Button type="button" className="w-full" disabled={disabled} onClick={handleDelete} variant="outline">
                     <Trash className="size-4 mr-2" />
